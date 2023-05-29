@@ -14,8 +14,12 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(habits.items) { item in
-                    Text(item.title)
+                ForEach(habits.habits) { item in
+                    NavigationLink {
+                        HabitDetailView(habitItem: item)
+                    } label: {
+                         Text(item.title)
+                    }
                 }
                 .onDelete(perform: removeItems)
             }
@@ -28,13 +32,13 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingAddHabit) {
-                AddItemView(habits: habits)
+                AddItemView(data: habits)
             }
         }
     }
     
     func removeItems(at offsets: IndexSet) {
-        habits.items.remove(atOffsets: offsets)
+        habits.habits.remove(atOffsets: offsets)
     }
 }
 

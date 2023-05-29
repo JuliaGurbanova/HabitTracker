@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddItemView: View {
-    @ObservedObject var habits: Habits
+    @ObservedObject var data: Habits
     @Environment(\.dismiss) var dismiss
     
     @State private var title = ""
@@ -23,8 +23,12 @@ struct AddItemView: View {
             .navigationTitle("Add habit")
             .toolbar {
                 Button("Save") {
-                    let item = HabitItem(title: title, description: description)
-                    habits.items.append(item)
+                    let trimmedTitle = title.trimmingCharacters(in: .whitespaces)
+                    guard trimmedTitle.isEmpty == false else { return }
+                    
+                    let habit = HabitItem(title: trimmedTitle, description: description)
+                    
+                    data.habits.append(habit)
                     dismiss()
                 }
             }
@@ -34,6 +38,6 @@ struct AddItemView: View {
 
 struct AddItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemView(habits: Habits())
+        AddItemView(data: Habits())
     }
 }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct HabitItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let description: String
+struct HabitItem: Identifiable, Codable {
+    var id = UUID()
+    var title: String
+    var description: String
 }
